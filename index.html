@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>人评观察室 · 自动评分怎样指导人工复核</title>
+<meta name="description" content="一项关于语言模型排行榜的研究。探索 WMT 和 MT-Bench 的复核成本，并亲手验证何时可以停止评分。">
+<meta name="theme-color" content="#f8f8f2"><link rel="icon" href="mark.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="demo.css"><script src="app.js" defer></script><script src="demo.js" defer></script>
+</head>
+<body><a href="#main" class="skip">跳至内容</a>
+<header><div class="wrap nav"><a class="brand" href="#main" aria-label="人评观察室首页"><span class="brandmark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>人评观察室</a><nav aria-label="页面导航"><a href="#results">实验结果</a><a href="#method">复核实验台</a><a href="#further">研究边界</a></nav><a class="paper-link" href="paper.pdf">论文原文 <span aria-hidden="true">↗</span></a></div></header>
+<main id="main" class="wrap">
+<section class="hero" aria-labelledby="hero-title"><div class="hero-copy"><div class="field-label"><span class="shortline"></span>LLM EVALUATION <span class="slash">/</span> 研究展览</div>
+<h1 id="hero-title">当自动评分<br><em>选错了冠军</em></h1><p class="lead">它还能告诉我们，哪份回答最值得人看吗？<br class="wide-only">用翻译和对话评测记录，检验排行榜上的每一次选择。</p><a class="primary" href="#results">探索实验结果 <span>↓</span></a></div>
+<figure class="hero-figure"><div class="figure-head"><span><i></i> 评分地形</span><span>REVIEW FIELD</span></div><img src="review-field.webp" width="1090" height="592" alt="概念插图：由绿色方柱构成的起伏曲面，亮色柱顶标出高值区域。"><figcaption><span>系统 × 译文</span><span>概念示意</span></figcaption></figure></section>
+<div class="metrics" aria-label="研究摘要"><div><strong>29.0–40.1<small>%</small></strong><span>WMT22 专家评分条数降幅</span></div><div><strong>4 <i>/</i> 4</strong><span>预设百分位推荐超出容差的方向</span></div><div><strong>0.25 <small>分</small></strong><span>允许的平均人工罚分差距</span></div></div>
+<section id="results" class="section"><div class="field-label"><span class="shortline"></span>FIELD RESULTS</div><h2>人工复核能省多少？</h2><p class="intro">切换评测年份和翻译方向，比较达到同一发布标准所需的专家评分条数。</p>
+<div class="chart-shell"><div class="chart-side"><p class="smalltitle">实验数据</p><div id="study-switch" class="study-switch" role="group" aria-label="选择实验"><button type="button" data-study="2022" aria-pressed="true">WMT 2022</button><button type="button" data-study="2021" aria-pressed="false">WMT 2021</button></div><label for="language">翻译方向</label><select id="language" name="language"><option>英语 → 德语</option></select><p id="study-note"></p></div><div class="chart-main" aria-live="polite" aria-atomic="true"><div class="chart-head"><div><p id="chart-code" class="smalltitle"></p><h3 id="chart-title"></h3></div><span id="chart-saving" class="saving"></span></div><div id="bars"></div><p class="chart-footer">每个方向重放 16 种查询次序，条数取平均，同组柱长共用零起点。</p></div></div>
+<details class="table-detail"><summary>查看全部方向的数值</summary><div class="table-scroll"><table><caption>同一方向内的两种查询策略</caption><thead><tr><th>实验</th><th>翻译方向</th><th>对照策略</th><th>排序引导</th><th>减少</th></tr></thead><tbody id="all-rows"></tbody></table></div></details>
+</section>
+<section id="method" class="section"><div class="field-label"><span class="shortline"></span>INTERACTIVE METHOD</div><h2>亲手决定何时停查</h2><p class="intro">两个系统各有四份译文。点击卡片揭晓罚分，看看还要查几条，才能确认 A 的平均罚分至多比 B 高 0.25 分。</p><div id="audit-demo"></div></section>
+<section id="further" class="section"><div class="field-label"><span class="shortline"></span>INTERPRETATION</div><h2>这些节约在哪些条件下成立？</h2><div class="findings"><article><span class="finding-tag">翻译排名</span><h3>同一个指标，两种冠军</h3><p>WMT22 按自动分的百分位均值选系统，四个方向的推荐都超出人工容差。改用原始分均值，英译中选中了人工冠军，另外三个仍超出容差。</p></article><article><span class="finding-tag">对话偏好</span><h3>更换候选，收益缩小</h3><p>MT-Bench 有 3,355 条专家偏好票。确认严格第一名时，GPT-4 引导使复核量从约 2,500 条降至 1,832 条。移除 GPT-4 作为候选后，节约降到 2.6%。</p></article><article><span class="finding-tag">适用范围</span><h3>保证落在这批记录上</h3><p>数值翻译实验将每条人工罚分限制在 0–25。结论针对能匹配的固定题池，成本按打开的历史评分计算。未来题目上的表现与真实排班工时还需另外测量。</p></article></div></section>
+<section id="paper" class="paper-block"><div class="paper-art" aria-hidden="true"><div class="sheet"><span></span><b></b><b></b><i></i></div></div><div class="paper-info"><div class="smalltitle">RESEARCH MANUSCRIPT · 论文手稿</div><h2 lang="en">Using Provisional Leaderboards<br>to Guide Human Review</h2><p>英文全文 · 12 页 · 含实验设计、数学推导与附录</p></div><a class="primary" href="paper.pdf">阅读论文 <span>↗</span></a></section>
+<noscript><p>年度对照与互动实验台需要开启 JavaScript。全部数据与结论也可在<a href="paper.pdf">论文 PDF</a>中阅读。</p></noscript></main>
+<footer><div class="wrap foot"><span>人评观察室 <b>／</b> LLM Evaluation</span><a href="#main">返回顶部 ↑</a></div></footer></body></html>
